@@ -88,14 +88,11 @@ This project enhances it by:
 
 ## 📸 Screenshots
 
-(Add your screenshots here)
+![dashboard](screenshots/screen1.png)
 
-Example:
+![dashboard](screenshots/screen2.png)
 
-* Dashboard Overview
-* Sales Analytics
-* AI Insights Panel
-* Inventory Alerts
+![dashboard](screenshots/screen3.png)
 
 ---
 
@@ -106,8 +103,5 @@ Example:
 * User authentication
 * Mobile app version
 * Advanced AI recommendations
-
----
-
 
 ---
