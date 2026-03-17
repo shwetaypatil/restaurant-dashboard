@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RestoManager - Admin Dashboard</title>
+<!-- Tailwind CSS v3 CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Chart.js for data visualization -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="typography">
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+<style data-purpose="layout">
+    /* Custom scrollbar for better aesthetics */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+    [data-elevate] {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    [data-elevate]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -16px rgba(15, 23, 42, 0.45);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-white to-emerald-50 text-gray-900 overflow-hidden antialiased">
+<!-- BEGIN: DashboardWrapper -->
+<div class="flex h-screen overflow-hidden">
+<!-- BEGIN: Sidebar -->
+<aside class="w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col hidden md:flex">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center font-bold text-xl">R</div>
+<h1 class="text-xl font-bold tracking-tight">RestoManager</h1>
+</div>
+<nav class="flex-1 px-4 space-y-1 py-4">
+<a class="flex items-center gap-3 bg-emerald-600/20 text-emerald-400 px-4 py-3 rounded-lg font-medium transition-all" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Dashboard
+        </a>
+<a class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition-all" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Orders
+        </a>
+<a class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition-all" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Analytics
+        </a>
+<a class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition-all" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Inventory
+        </a>
+<a class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition-all" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Staff Management
+        </a>
+<a class="flex items-center gap-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-3 rounded-lg font-medium transition-all" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          Settings
+        </a>
+</nav>
+<div class="p-4 mt-auto border-t border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 font-bold">JD</div>
+<div>
+<p class="text-sm font-semibold">John Doe</p>
+<p class="text-xs text-slate-400">Owner</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: Sidebar -->
+<!-- BEGIN: MainContentArea -->
+<main class="flex-1 overflow-y-auto h-full pb-10">
+<!-- BEGIN: Header -->
+<header class="bg-white/80 backdrop-blur border-b sticky top-0 z-10 px-8 py-4 flex items-center justify-between shadow-sm">
+<div>
+<h2 class="text-2xl font-bold text-gray-800">Dashboard Overview</h2>
+<p class="text-sm text-gray-500">Welcome back, John. Here's what's happening today.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<button class="p-2 text-gray-500 hover:bg-gray-100 rounded-full relative">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="absolute top-1 right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
+</button>
+</div>
+<button class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 hover:bg-emerald-700 transition">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            Quick Sale
+          </button>
+</div>
+</header>
+<!-- END: Header -->
+<div class="p-8">
+<!-- BEGIN: TopSummaryCards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+<!-- Orders Today -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="stat-card" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">+12%</span>
+</div>
+<h3 class="text-sm font-medium text-gray-500">Orders Today</h3>
+<p class="text-3xl font-bold mt-1">142</p>
+</div>
+<!-- Revenue Today -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="stat-card" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">+8.4%</span>
+</div>
+<h3 class="text-sm font-medium text-gray-500">Revenue (&#8377;)</h3>
+<p class="text-3xl font-bold mt-1">42,500</p>
+</div>
+<!-- Expenses Today -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="stat-card" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-red-50 rounded-lg text-red-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded">+2.1%</span>
+</div>
+<h3 class="text-sm font-medium text-gray-500">Expenses Today</h3>
+<p class="text-3xl font-bold mt-1">12,800</p>
+</div>
+<!-- Net Profit -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="stat-card" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-amber-50 rounded-lg text-amber-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded">Target 85%</span>
+</div>
+<h3 class="text-sm font-medium text-gray-500">Net Profit</h3>
+<p class="text-3xl font-bold mt-1 text-emerald-600">29,700</p>
+</div>
+<!-- Most Profitable Dish -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="stat-card" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-violet-50 rounded-lg text-violet-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8V4m0 4a4 4 0 100 8m0-8a4 4 0 110 8m0 0v4m-6 0h12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="text-xs font-semibold text-violet-600 bg-violet-50 px-2 py-1 rounded">Best Margin</span>
+</div>
+<h3 class="text-sm font-medium text-gray-500">Most Profitable Dish</h3>
+<p class="text-lg font-bold mt-1">Margherita Pizza</p>
+<p class="text-sm text-gray-500 mt-1">Profit: <span class="font-semibold text-gray-900">&#8377;8,200</span></p>
+</div>
+<!-- Average Order Value -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="stat-card" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-cyan-50 rounded-lg text-cyan-600">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4m4-4c2.21 0 4 1.79 4 4m-4-4V5m0 11v3m8-7a8 8 0 11-16 0 8 8 0 0116 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<span class="text-xs font-semibold text-cyan-600 bg-cyan-50 px-2 py-1 rounded">Stable</span>
+</div>
+<h3 class="text-sm font-medium text-gray-500">Average Order Value</h3>
+<p class="text-3xl font-bold mt-1">&#8377;299</p>
+</div>
+</section>
+<!-- END: TopSummaryCards -->
+<!-- BEGIN: SalesAndActionsGrid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+<!-- Sales Analytics -->
+<div class="lg:col-span-2 bg-white p-6 rounded-xl border shadow-sm" data-purpose="sales-analytics" data-elevate>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold">Sales Analytics</h3>
+<select class="text-sm border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+<div class="h-64">
+<canvas id="salesTrendChart"></canvas>
+</div>
+</div>
+<!-- AI Insights Panel -->
+<div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg" data-purpose="ai-insights" data-elevate>
+<div class="flex items-center gap-2 mb-6">
+<div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h3 class="text-lg font-bold">AI Smart Insights</h3>
+</div>
+<ul class="space-y-4 text-sm">
+<li class="flex gap-3">
+<span class="text-emerald-400">&#8226;</span>
+<p>Cheese stock is critically low; will likely run out in <span class="text-emerald-400 font-bold">2 days</span> based on current usage.</p>
+</li>
+<li class="flex gap-3">
+<span class="text-emerald-400">&#8226;</span>
+<p>Expected peak order time today: <span class="text-emerald-400 font-bold">7:00 PM - 9:30 PM</span>. Prepare extra dough.</p>
+</li>
+<li class="flex gap-3">
+<span class="text-emerald-400">&#8226;</span>
+<p>Burger demand is up <span class="text-emerald-400 font-bold">15%</span> this week. Consider a lunch combo offer.</p>
+</li>
+<li class="flex gap-3">
+<span class="text-emerald-400">&#8226;</span>
+<p>Electricity usage is spiking between 2-4 PM. Check appliance efficiency.</p>
+</li>
+</ul>
+<button class="w-full mt-8 py-2 border border-slate-700 rounded-lg hover:bg-slate-800 transition text-xs uppercase tracking-wider font-semibold">View Full Audit</button>
+</div>
+</div>
+<!-- END: SalesAndActionsGrid -->
+<!-- BEGIN: SecondaryGrid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+<!-- Top Selling Dishes -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="top-dishes" data-elevate>
+<h3 class="text-lg font-bold mb-4">Top Selling Dishes</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="text-gray-400 border-b">
+<th class="pb-3 font-medium">Dish</th>
+<th class="pb-3 font-medium text-center">Orders</th>
+<th class="pb-3 font-medium text-right">Revenue</th>
+</tr>
+</thead>
+<tbody class="divide-y">
+<tr>
+<td class="py-3 font-medium">Margherita Pizza</td>
+<td class="py-3 text-center">45</td>
+<td class="py-3 text-right">&#8377;15,750</td>
+</tr>
+<tr>
+<td class="py-3 font-medium">Zinger Burger</td>
+<td class="py-3 text-center">38</td>
+<td class="py-3 text-right">&#8377;9,500</td>
+</tr>
+<tr>
+<td class="py-3 font-medium">Pesto Pasta</td>
+<td class="py-3 text-center">24</td>
+<td class="py-3 text-right">&#8377;8,400</td>
+</tr>
+<tr>
+<td class="py-3 font-medium">Chicken Caesar</td>
+<td class="py-3 text-center">18</td>
+<td class="py-3 text-right">&#8377;6,300</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Inventory Status -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="inventory-status" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Inventory Alerts</h3>
+<a class="text-emerald-600 text-xs font-semibold hover:underline" href="#">Manage Stock</a>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-100">
+<div>
+<p class="font-bold text-red-800">Mozzarella Cheese</p>
+<p class="text-xs text-red-600">Critical: 2kg remaining</p>
+</div>
+<span class="text-xs bg-red-600 text-white px-2 py-1 rounded font-bold uppercase">Low</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-amber-50 rounded-lg border border-amber-100">
+<div>
+<p class="font-bold text-amber-800">Fresh Tomatoes</p>
+<p class="text-xs text-amber-600">Restock soon: 8kg remaining</p>
+</div>
+<span class="text-xs bg-amber-600 text-white px-2 py-1 rounded font-bold uppercase">Medium</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-emerald-50 rounded-lg border border-emerald-100">
+<div>
+<p class="font-bold text-emerald-800">Chicken Breast</p>
+<p class="text-xs text-emerald-600">Healthy: 25kg remaining</p>
+</div>
+<span class="text-xs bg-emerald-600 text-white px-2 py-1 rounded font-bold uppercase">High</span>
+</div>
+</div>
+</div>
+<!-- Expense Breakdown -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="expense-chart" data-elevate>
+<h3 class="text-lg font-bold mb-4">Expense Breakdown</h3>
+<div class="h-48 flex items-center justify-center">
+<canvas id="expensePieChart"></canvas>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-2 text-xs">
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Ingredients</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Staff Salary</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Rent</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-red-500"></span> Utilities</div>
+</div>
+</div>
+</div>
+<!-- END: SecondaryGrid -->
+<!-- BEGIN: StaffAndOrdersGrid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Recent Orders -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="recent-orders" data-elevate>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold">Recent Transactions</h3>
+<button class="text-sm text-emerald-600 font-semibold">View All</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between py-3 border-b border-gray-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-gray-100 flex items-center justify-center font-bold text-gray-500 text-xs">#1240</div>
+<div>
+<p class="font-semibold text-sm">Rahul Sharma</p>
+<p class="text-xs text-gray-400">10 mins ago &#8226; Dine-in</p>
+</div>
+</div>
+<p class="font-bold">&#8377;1,240</p>
+</div>
+<div class="flex items-center justify-between py-3 border-b border-gray-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-gray-100 flex items-center justify-center font-bold text-gray-500 text-xs">#1239</div>
+<div>
+<p class="font-semibold text-sm">Priya V.</p>
+<p class="text-xs text-gray-400">25 mins ago &#8226; Delivery</p>
+</div>
+</div>
+<p class="font-bold">&#8377;850</p>
+</div>
+<div class="flex items-center justify-between py-3 border-b border-gray-50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-gray-100 flex items-center justify-center font-bold text-gray-500 text-xs">#1238</div>
+<div>
+<p class="font-semibold text-sm">Anonymous</p>
+<p class="text-xs text-gray-400">45 mins ago &#8226; Takeaway</p>
+</div>
+</div>
+<p class="font-bold">&#8377;2,100</p>
+</div>
+</div>
+</div>
+<!-- Staff Cost Tracker -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="staff-tracker" data-elevate>
+<h3 class="text-lg font-bold mb-6">Staff Cost Tracker</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="text-gray-400 border-b">
+<th class="pb-3 font-medium">Name</th>
+<th class="pb-3 font-medium">Role</th>
+<th class="pb-3 font-medium text-right">Monthly Salary</th>
+</tr>
+</thead>
+<tbody class="divide-y">
+<tr>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs">SK</div>
+<span class="font-semibold">Sanjay Kumar</span>
+</div>
+</td>
+<td class="py-4">Head Chef</td>
+<td class="py-4 text-right font-semibold">&#8377;45,000</td>
+</tr>
+<tr>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs">MD</div>
+<span class="font-semibold">Meena Devi</span>
+</div>
+</td>
+<td class="py-4">Sous Chef</td>
+<td class="py-4 text-right font-semibold">&#8377;32,000</td>
+</tr>
+<tr>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-xs">RK</div>
+<span class="font-semibold">Rohan K.</span>
+</div>
+</td>
+<td class="py-4">Waitstaff</td>
+<td class="py-4 text-right font-semibold">&#8377;18,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- END: StaffAndOrdersGrid -->
+<!-- BEGIN: OrdersAndPeakGrid -->
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Orders by Type -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="orders-type" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Orders by Type</h3>
+<span class="text-xs text-gray-500">Last 7 Days</span>
+</div>
+<div class="h-52">
+<canvas id="ordersTypeChart" role="img" aria-label="Orders by type distribution chart"></canvas>
+</div>
+<div class="mt-4 grid grid-cols-3 gap-2 text-xs">
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Dine-in 45%</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Delivery 35%</div>
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Takeaway 20%</div>
+</div>
+</div>
+<!-- Peak Hour Heatmap -->
+<div class="bg-white p-6 rounded-xl border shadow-sm" data-purpose="peak-heatmap" data-elevate>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Peak Hour Heatmap</h3>
+<span class="text-xs text-gray-500">Today</span>
+</div>
+<div class="h-52">
+<canvas id="peakHourChart" role="img" aria-label="Peak hour intensity heatmap chart"></canvas>
+</div>
+<div class="mt-4 text-xs text-gray-600">
+Lunch Rush &#8594; <span class="font-semibold text-gray-900">12&#8211;2 PM</span> &nbsp; | &nbsp; Dinner Rush &#8594; <span class="font-semibold text-gray-900">7&#8211;9 PM</span>
+</div>
+</div>
+</div>
+<!-- END: OrdersAndPeakGrid -->
+<!-- BEGIN: QuickActionsAndAlerts -->
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
+<!-- Quick Actions -->
+<div class="lg:col-span-3 bg-white p-6 rounded-xl border shadow-sm" data-purpose="quick-actions" data-elevate>
+<h3 class="text-lg font-bold mb-6">Quick Actions</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100 transition group">
+<svg class="w-6 h-6 mb-2 group-hover:scale-110 transition" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-semibold">Add Order</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100 transition group">
+<svg class="w-6 h-6 mb-2 group-hover:scale-110 transition" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-semibold">Add Expense</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-purple-50 text-purple-700 border border-purple-100 hover:bg-purple-100 transition group">
+<svg class="w-6 h-6 mb-2 group-hover:scale-110 transition" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-semibold">Add Supplier</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-amber-50 text-amber-700 border border-amber-100 hover:bg-amber-100 transition group">
+<svg class="w-6 h-6 mb-2 group-hover:scale-110 transition" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-semibold">Create Invoice</span>
+</button>
+</div>
+</div>
+<!-- Notifications/Alerts -->
+<div class="bg-white p-6 rounded-xl border shadow-sm border-l-4 border-l-amber-400" data-purpose="alerts" data-elevate>
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              Notifications
+            </h3>
+<div class="space-y-3">
+<div class="text-xs p-3 bg-gray-50 rounded border">
+<p class="font-bold text-gray-700">Supplier Payment Due</p>
+<p class="text-gray-500">&#8377;12,400 to 'Fresh Farm Ltd' due by tomorrow.</p>
+</div>
+<div class="text-xs p-3 bg-gray-50 rounded border">
+<p class="font-bold text-gray-700">System Maintenance</p>
+<p class="text-gray-500">POS updates tonight at 2:00 AM.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- END: QuickActionsAndAlerts -->
+</div>
+</main>
+<!-- END: MainContentArea -->
+</div>
+<!-- END: DashboardWrapper -->
+<!-- BEGIN: ChartScripts -->
+<script data-purpose="sales-chart-init">
+    const ctxSales = document.getElementById('salesTrendChart').getContext('2d');
+    new Chart(ctxSales, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Daily Revenue (&#8377;)',
+          data: [32000, 35000, 31000, 38000, 45000, 52000, 42500],
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: '#10b981'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: '#f3f4f6' }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  </script>
+<script data-purpose="expense-chart-init">
+    const ctxExpense = document.getElementById('expensePieChart').getContext('2d');
+    new Chart(ctxExpense, {
+      type: 'doughnut',
+      data: {
+        labels: ['Ingredients', 'Staff Salary', 'Rent', 'Utilities'],
+        datasets: [{
+          data: [45, 25, 20, 10],
+          backgroundColor: [
+            '#3b82f6', // blue
+            '#10b981', // emerald
+            '#f59e0b', // amber
+            '#ef4444'  // red
+          ],
+          borderWidth: 0,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        cutout: '70%'
+      }
+    });
+  </script>
+<script data-purpose="orders-type-chart-init">
+    const ctxOrdersType = document.getElementById('ordersTypeChart').getContext('2d');
+    new Chart(ctxOrdersType, {
+      type: 'doughnut',
+      data: {
+        labels: ['Dine-in', 'Delivery', 'Takeaway'],
+        datasets: [{
+          data: [45, 35, 20],
+          backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+          borderWidth: 0,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        cutout: '65%'
+      }
+    });
+  </script>
+<script data-purpose="peak-hour-chart-init">
+    const ctxPeak = document.getElementById('peakHourChart').getContext('2d');
+    const peakValues = [12, 18, 60, 55, 42, 30, 70, 68, 50];
+    const peakColors = peakValues.map((value) => {
+      if (value >= 60) return '#10b981';
+      if (value >= 45) return '#34d399';
+      if (value >= 30) return '#a7f3d0';
+      return '#e5f7ef';
+    });
+    new Chart(ctxPeak, {
+      type: 'bar',
+      data: {
+        labels: ['10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '6 PM', '7 PM', '8 PM', '9 PM'],
+        datasets: [{
+          data: peakValues,
+          backgroundColor: peakColors,
+          borderRadius: 6,
+          barPercentage: 0.7,
+          categoryPercentage: 0.8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => `Intensity: ${context.parsed.y}`
+            }
+          }
+        },
+        scales: {
+          y: {
+            display: false,
+            beginAtZero: true,
+            grid: { display: false }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { color: '#6b7280', font: { size: 11 } }
+          }
+        }
+      }
+    });
+  </script>
+<!-- END: ChartScripts -->
+</body></html>
